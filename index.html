@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="Guess the number game">
+    <title>Number Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: antiquewhite;">
+    <h1><ins style="color: deeppink;">NUMBER  <ins style="color:darkviolet;">GAME</ins></h1>
+    <h3 style="color: chocolate; margin-left: 100px;">Guess a Number Between 1 and 100</h3>
+    <input id="in" type="number" max="100" min="1" style="padding: 10px; font-size: 20px; margin-left: 180px; border-color: brown; background-color: bisque;">
+     <button onclick="checkguess()" style="border: 2px yellow solid; background-color: crimson; padding: 8px; margin-left: 15px; border-radius: 4px; cursor: pointer;" id="btn">Guess</button>
+      <p id="one"  style="margin-left: 80px; font-size: xx-large;"></p>
+      <p><strong style="font-size: large;">Attempts:</strong><span style="font-size: large;" id="attempts">0</span><span style="font-size:large">/10</span></p>
+      <button onclick="dis()" style="border: 2px yellow solid; background-color: blue; padding: 8px; margin-left: 15px; border-radius: 4px; cursor: pointer;" id="res">Reset</button>
+    </body>
+    <script>
+        const randomnumber=Math.floor(Math.random()*100)+1;
+        let attempts=0;
+        let guessnumber=[];
+        let maxattempts=10;
+        function checkguess(){
+            const guessinput=document.getElementById("in");
+            const userguess=parseInt(guessinput.value);
+            const message=document.getElementById("one");
+            const attemptdisplay=document.getElementById("attempts")
+            if(isNaN(userguess)){
+                message.textContent="Please Enter a Number!!!";
+                message.style.color="red"
+                return;
+            }
+            if(userguess<1 || userguess>100){
+                message.textContent="Number Must Be Between 1 and 100"
+                message.style.color="red"
+                return;
+            }
+            attempts++;
+            if(userguess===randomnumber){
+                message.textContent="You Guessed The Correct Number!!!!!!!!!!!!"
+                message.style.color="green"
+            }
+            else if(userguess<randomnumber){
+                message.textContent="Too Low!! Try Again"
+                message.style.color="red"
+            }
+            else{
+                message.textContent="Tooo High!! Try Again"
+                message.style.color="red"
+            }
+             if(attempts===10){
+                message.textContent="Game Overr!!!"
+                message.style.color="red"
+             }
+             attemptdisplay.textContent=attempts;
+            if(attempts>=maxattempts){
+                document.getElementById("in").disabled=true;
+                document.getElementById("btn").disabled=true;
+            }
+            let b=document.getElementById("res")
+            b.addEventListener("click",function dis(){
+                attempts=0
+                document.getElementById("in").disabled=false;
+                document.getElementById("btn").disabled=false;
+                attemptdisplay.textContent=+attempts;
+                guessinput.value="";
+
+            })
+        }
+    </script>
+</html>
